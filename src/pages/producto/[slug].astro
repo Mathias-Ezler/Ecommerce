@@ -1,0 +1,45 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SizeSelector from "../../components/SizeSelector.astro";
+import { products } from "../../data/products";
+import { formatPrice, messageTemplate, buildWaLink } from "../../lib/whatsapp";
+
+export function getStaticPaths() {
+  return products.map((p) => ({ params: { slug: p.slug }, props: { product: p } }));
+}
+
+const { product: p } = Astro.props;
+const template = messageTemplate(p.name, p.price);
+---
+<Layout title={`${p.name} — GLAM`} description={p.description}>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <a href="/#catalogo" class="text-xs uppercase tracking-widest text-neutral-500 hover:text-white transition">
+      <i class="fa-solid fa-arrow-left mr-2"></i>Volver a la colección
+    </a>
+
+    <div data-product class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div class="bg-neutral-900 aspect-[3/4] overflow-hidden">
+        <img src={p.image} alt={p.name} class="w-full h-full object-cover grayscale contrast-125" />
+      </div>
+
+      <div class="flex flex-col justify-center gap-6">
+        <div>
+          <span class="text-[10px] uppercase tracking-widest text-neutral-500 font-medium">{p.category} · {p.color}</span>
+          <h1 class="text-2xl font-serif font-bold text-white mt-2">{p.name}</h1>
+          <p class="text-xl font-light text-neutral-200 mt-2">{formatPrice(p.price)}</p>
+        </div>
+
+        <p class="text-sm text-neutral-400 leading-relaxed max-w-md">{p.description}</p>
+
+        <div>
+          <span class="block text-[10px] uppercase tracking-widest text-neutral-400 mb-2">Talle</span>
+          <SizeSelector sizes={p.sizes} />
+        </div>
+
+        <a data-wa data-template={template} href={buildWaLink(template)} target="_blank" rel="noopener noreferrer" class="btn-wa max-w-md py-4">
+          <i class="fa-brands fa-whatsapp text-base"></i> Consultar por WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,36 @@
+---
+import { WA_NUMBER } from "../lib/whatsapp";
+---
+<footer id="footer" class="bg-neutral-950 border-t border-neutral-900 text-neutral-400 py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+      <div class="space-y-4">
+        <span class="font-serif text-2xl font-bold tracking-widest text-white block">X</span>
+        <p class="text-xs text-neutral-500 leading-relaxed max-w-xs">
+          Redefiniendo el guardarropa moderno a través de la simplicidad, materiales premium y cortes atemporales.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-xs uppercase tracking-widest font-semibold text-white mb-4">Navegación</h4>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/#catalogo" class="hover:text-white transition">Colección 2026</a></li>
+          <li><a href={`https://wa.me/${WA_NUMBER}`} class="hover:text-white transition">Cómo comprar</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-xs uppercase tracking-widest font-semibold text-white mb-4">Síguenos</h4>
+        <div class="flex space-x-4">
+          <a href="#" aria-label="Instagram" class="w-9 h-9 border border-neutral-800 rounded-full flex items-center justify-center hover:border-white hover:text-white transition"><i class="fa-brands fa-instagram text-xs"></i></a>
+          <a href="#" aria-label="TikTok" class="w-9 h-9 border border-neutral-800 rounded-full flex items-center justify-center hover:border-white hover:text-white transition"><i class="fa-brands fa-tiktok text-xs"></i></a>
+          <a href={`https://wa.me/${WA_NUMBER}`} aria-label="WhatsApp" class="w-9 h-9 border border-neutral-800 rounded-full flex items-center justify-center hover:border-white hover:text-white transition"><i class="fa-brands fa-whatsapp text-xs"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-neutral-900 pt-8 text-[10px] text-neutral-600 uppercase tracking-widest">
+      <p>&copy; 2026 X Store. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>

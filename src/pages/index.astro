@@ -1,11 +1,80 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
+import ProductCard from "../components/ProductCard.astro";
+import { products, categories } from "../data/products";
 ---
-
 <Layout>
-	<Welcome />
+  <section class="relative bg-neutral-900 h-[75vh] min-h-[500px] flex items-center justify-center overflow-hidden border-b border-neutral-800">
+    <div class="absolute inset-0 opacity-40 mix-blend-luminosity bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1600&auto=format&fit=crop');"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent"></div>
+
+    <div class="relative max-w-4xl mx-auto text-center px-4">
+      <span class="text-xs uppercase tracking-[0.3em] text-neutral-400 font-semibold mb-3 block">Colección Atemporal 2026</span>
+      <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white mb-6 text-glow leading-tight">
+        MODA MODERNA &amp; MINIMALISTA
+      </h1>
+      <p class="text-neutral-300 text-sm sm:text-base font-light max-w-xl mx-auto mb-8 tracking-wide">
+        Diseños estructurados, líneas puras y una estética monocromática concebida para perdurar.
+      </p>
+      <a href="#catalogo" class="inline-block bg-white text-neutral-950 font-medium text-xs uppercase tracking-widest px-8 py-4 hover:bg-neutral-200 transition duration-300 shadow-lg">
+        Ver colección
+      </a>
+    </div>
+  </section>
+
+  <section id="catalogo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 scroll-mt-20">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-neutral-800 mb-10">
+      <div class="flex flex-wrap items-center gap-2" id="category-filters">
+        <button class="chip" data-cat="Todos" aria-pressed="true">Todos</button>
+        {categories.map((c) => <button class="chip" data-cat={c} aria-pressed="false">{c}</button>)}
+      </div>
+
+      <div class="relative min-w-[260px]">
+        <input id="search-input" type="search" placeholder="Buscar producto..."
+          class="w-full bg-neutral-900 border border-neutral-800 text-neutral-100 text-xs px-4 py-3 pl-10 focus:outline-none focus:border-neutral-500 transition placeholder-neutral-500" />
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-neutral-500 text-xs"></i>
+      </div>
+    </div>
+
+    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
+      {products.map((p) => <ProductCard product={p} />)}
+    </div>
+
+    <div id="empty-state" class="hidden text-center py-20">
+      <i class="fa-solid fa-box-open text-4xl text-neutral-700 mb-4"></i>
+      <p class="text-neutral-400 text-sm tracking-wide">No se encontraron prendas que coincidan con tu búsqueda.</p>
+      <button id="reset-filters" class="mt-4 text-xs uppercase tracking-widest text-white border-b border-white pb-1 hover:text-neutral-300">Restablecer filtros</button>
+    </div>
+  </section>
+
+  <script>
+    const cards = document.querySelectorAll<HTMLElement>("#product-grid [data-product]");
+    const chips = document.querySelectorAll<HTMLButtonElement>("#category-filters .chip");
+    const input = document.getElementById("search-input") as HTMLInputElement;
+    const empty = document.getElementById("empty-state")!;
+    let category = "Todos";
+
+    function apply() {
+      const term = input.value.toLowerCase().trim();
+      let visible = 0;
+      cards.forEach((card) => {
+        const okCat = category === "Todos" || card.dataset.category === category;
+        const okSearch = (card.dataset.search ?? "").includes(term);
+        const show = okCat && okSearch;
+        card.classList.toggle("hidden", !show);
+        if (show) visible++;
+      });
+      empty.classList.toggle("hidden", visible > 0);
+    }
+
+    function setCategory(c: string) {
+      category = c;
+      chips.forEach((chip) => chip.setAttribute("aria-pressed", String(chip.dataset.cat === c)));
+      apply();
+    }
+
+    chips.forEach((chip) => chip.addEventListener("click", () => setCategory(chip.dataset.cat ?? "Todos")));
+    input.addEventListener("input", apply);
+    document.getElementById("reset-filters")!.addEventListener("click", () => { input.value = ""; setCategory("Todos"); });
+  </script>
 </Layout>

@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Cinzel", Georgia, serif;
+}
+
+html { scroll-behavior: smooth; }
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+
+.text-glow { text-shadow: 0 0 15px rgba(255, 255, 255, 0.2); }
+
+@layer components {
+  .chip {
+    @apply border border-neutral-800 bg-neutral-900 text-neutral-300 px-5 py-2 text-xs uppercase tracking-wider font-medium transition hover:border-neutral-500;
+  }
+  .chip[aria-pressed="true"] {
+    @apply border-white bg-white text-neutral-950;
+  }
+  .size-btn {
+    @apply border border-neutral-700 min-w-10 h-10 px-2 text-xs font-medium transition hover:border-white;
+  }
+  .size-btn[aria-pressed="true"] {
+    @apply bg-white text-neutral-950 border-white;
+  }
+  .btn-wa {
+    @apply w-full flex items-center justify-center gap-2 bg-neutral-100 text-neutral-950 text-[11px] font-semibold uppercase tracking-widest py-3 hover:bg-white transition;
+  }
+}

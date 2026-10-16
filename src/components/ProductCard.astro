@@ -1,0 +1,48 @@
+---
+import type { Product } from "../data/products";
+import { formatPrice, messageTemplate, buildWaLink } from "../lib/whatsapp";
+import SizeSelector from "./SizeSelector.astro";
+
+interface Props { product: Product }
+const { product: p } = Astro.props;
+const template = messageTemplate(p.name, p.price);
+---
+<article
+  data-product
+  data-category={p.category}
+  data-search={`${p.name} ${p.description} ${p.color}`.toLowerCase()}
+  class="group flex flex-col justify-between border border-neutral-900 bg-neutral-950 p-3 transition duration-300 hover:border-neutral-700"
+>
+  <a href={`/producto/${p.slug}`} class="relative block overflow-hidden bg-neutral-900 aspect-[3/4]">
+    <img
+      src={p.image}
+      alt={p.name}
+      loading="lazy"
+      class="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700 ease-out"
+    />
+    <div class="absolute inset-0 bg-neutral-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+      <span class="bg-white text-neutral-950 text-[10px] uppercase font-bold tracking-widest px-4 py-2">Ver detalle</span>
+    </div>
+  </a>
+
+  <div class="pt-4 flex flex-col flex-grow justify-between gap-4">
+    <div>
+      <span class="text-[10px] uppercase tracking-widest text-neutral-500 font-medium">{p.category}</span>
+      <h3 class="text-xs font-semibold text-neutral-100 uppercase tracking-wider mt-1 truncate">{p.name}</h3>
+      <p class="text-xs font-light text-neutral-400 mt-1">{formatPrice(p.price)}</p>
+    </div>
+
+    <SizeSelector sizes={p.sizes} />
+
+    <a
+      data-wa
+      data-template={template}
+      href={buildWaLink(template)}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn-wa"
+    >
+      <i class="fa-brands fa-whatsapp text-sm"></i> Consultar por WhatsApp
+    </a>
+  </div>
+</article>

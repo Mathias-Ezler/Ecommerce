@@ -1,0 +1,27 @@
+---
+import { WA_NUMBER } from "../lib/whatsapp";
+---
+<div class="bg-neutral-900 text-neutral-400 text-xs tracking-widest uppercase py-2 text-center border-b border-neutral-800 px-4">
+  <span class="font-medium text-neutral-200">Nueva colección / Verano '26</span>
+</div>
+
+<header class="sticky top-0 z-40 bg-neutral-950/90 backdrop-blur-md border-b border-neutral-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
+    <a href="/" class="font-serif text-3xl font-bold tracking-widest text-white hover:opacity-90 transition">X</a>
+
+    <nav class="hidden md:flex space-x-8 text-xs tracking-widest uppercase font-medium">
+      <a href="/#catalogo" class="text-neutral-300 hover:text-white transition py-1 border-b border-transparent hover:border-white">Colección</a>
+      <a href="/#footer" class="text-neutral-400 hover:text-white transition py-1 border-b border-transparent hover:border-white">Sobre X</a>
+    </nav>
+
+    <a
+      href={`https://wa.me/${WA_NUMBER}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="flex items-center gap-2 border border-neutral-700 text-neutral-200 hover:bg-white hover:text-neutral-950 hover:border-white transition px-4 py-2 text-xs uppercase tracking-widest"
+    >
+      <i class="fa-brands fa-whatsapp text-base"></i>
+      <span class="hidden sm:inline">Contactanos</span>
+    </a>
+  </div>
+</header>
