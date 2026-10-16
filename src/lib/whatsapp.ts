@@ -1,5 +1,5 @@
 export const WA_NUMBER: string =
-  import.meta.env.PUBLIC_WHATSAPP_NUMBER ?? "595981000000";
+  import.meta.env.PUBLIC_WHATSAPP_NUMBER ?? "595982473466";
 
 export const formatPrice = (n: number) => `$${n.toFixed(2)}`;
 
